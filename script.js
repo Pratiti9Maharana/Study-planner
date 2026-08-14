@@ -15,12 +15,19 @@ addTask.addEventListener("click", function(){
     <p>Topic: ${topic.value}</p>
     <p>Date: ${date.value}</p>
     <p>Priority: ${priority.value}</p> 
+    <button class="complete-btn">Completed</button>
     <button class="delete-btn">Delete</button>
     `;
     
     const deleteBtn = task.querySelector(".delete-btn");
     deleteBtn.addEventListener("click", function(){
         task.remove();
+    });
+
+    const completeBtn = task.querySelector(".complete-btn");
+
+    completeBtn.addEventListener("click", function(){
+        task.classList.toggle("completed");
     });
 
     taskList.appendChild(task);
