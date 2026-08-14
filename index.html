@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Planner</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class = "container">
+
+        <h1>STUDY PLANNER</h1>
+        <p>Plan. Accomplish. Succeed.</p>
+
+    </div>
+
+    <div class="container">
+        <input type="text" id="subject" placeholder="Enter Subject">
+        
+        <input type="text" id="topic" placeholder="Enter topic">
+
+        <input type="date" id="date" placeholder="Enter date">
+
+        <select id="priority">
+            <option value="">Select the priority</option>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">Low</option>
+        </select>
+
+        <button id="addTask">Add Task</button>
+    </div> 
+
+    <div id="taskList">
+    </div>
+    <script src="script.js"></script>
+    
+</body>
+</html>
