@@ -9,6 +9,26 @@ const addTask = document.getElementById("addTask");
 const taskList = document.getElementById("taskList");
 
 
+function updateProgress() {
+    const totalTasks = tasks.length;
+
+    const completedTasks = tasks.filter(function(task) {
+        return task.completed;
+    }).length;
+
+    let percentage = 0;
+
+    if(totalTasks > 0) {
+        percentage = Math.round((completedTasks / totalTasks) * 100);
+    }
+
+    const progress = document.getElementById("progress");
+    const progressText = document.getElementById("progress-text");
+
+    progress.style.width = percentage + "%";
+    progressText.textContent = percentage + "% Completed";
+}
+
 function displayTask(taskData) {
 
     const task = document.createElement("div");
@@ -33,10 +53,11 @@ function displayTask(taskData) {
     deleteBtn.addEventListener("click", function() {
         task.remove();
         tasks = tasks.filter(function(item){
-            return itme != taskData;
+            return item != taskData;
         });
 
         localStorage.setItem("tasks", JSON.stringify(tasks));
+        updateProgress();
     });
 
     const completeBtn = task.querySelector(".complete-btn");
@@ -47,6 +68,7 @@ function displayTask(taskData) {
         taskData.completed = task.classList.contains("completed");
 
         localStorage.setItem("tasks", JSON.stringify(tasks));
+        updateProgress();
     });
 
     taskList.appendChild(task);
@@ -68,9 +90,11 @@ addTask.addEventListener("click", function() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
 
     displayTask(newTask);
+    updateProgress();
 });
 
 
 tasks.forEach(function(savedTask) {
     displayTask(savedTask);
 });
+updateProgress();
