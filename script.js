@@ -1,4 +1,6 @@
+console.log("NEW JS FILE IS RUNNING");
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+let editingTask = null;
 
 const subject = document.getElementById("subject");
 const topic = document.getElementById("topic");
@@ -40,8 +42,10 @@ function displayTask(taskData) {
         <p>Topic: ${taskData.topic}</p>
         <p>Date: ${taskData.date}</p>
         <p>Priority: ${taskData.priority}</p>
-        <button class="complete-btn">Completed</button>
-        <button class="delete-btn">Delete</button>
+        <button type="button" class="complete-btn">Completed</button>
+        <button type="button" class="edit-btn">Edit</button>
+        <button type="button" class="delete-btn">Delete</button>
+        
     `;
 
     if (taskData.completed) {
@@ -71,25 +75,60 @@ function displayTask(taskData) {
         updateProgress();
     });
 
+    const editBtn = task.querySelector(".edit-btn");
+
+    editBtn.addEventListener("click", function(){
+        console.log("EDIT CLICKED");
+
+        
+        subject.value = taskData.subject;
+        topic.value = taskData.topic;
+        date.value = taskData.date;
+        priority.value = taskData.priority;
+
+        editingTask = taskData;
+
+    });
+
     taskList.appendChild(task);
 }
 
-
 addTask.addEventListener("click", function() {
 
-    const newTask = {
-        subject: subject.value,
-        topic: topic.value,
-        date: date.value,
-        priority: priority.value,
-        completed: false
-    };
+    if (editingTask) {
 
-    tasks.push(newTask);
+        editingTask.subject = subject.value;
+        editingTask.topic = topic.value;
+        editingTask.date = date.value;
+        editingTask.priority = priority.value;
 
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+        localStorage.setItem("tasks", JSON.stringify(tasks));
 
-    displayTask(newTask);
+        taskList.innerHTML = "";
+
+        tasks.forEach(function(task) {
+            displayTask(task);
+        });
+
+        editingTask = null;
+
+    } else {
+
+        const newTask = {
+            subject: subject.value,
+            topic: topic.value,
+            date: date.value,
+            priority: priority.value,
+            completed: false
+        };
+
+        tasks.push(newTask);
+
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+
+        displayTask(newTask);
+    }
+
     updateProgress();
 });
 
